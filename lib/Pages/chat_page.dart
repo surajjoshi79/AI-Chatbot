@@ -15,7 +15,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   static const apiKey="AIzaSyBul_e6uMK4IVUNVicNJuJPqOksawwvNdU";
   List<String> curChat=[];
-  final model = GenerativeModel(model: 'gemini-pro', apiKey: apiKey);
+  final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   ScrollController scr=ScrollController();
   TextEditingController txt=TextEditingController();
   FocusNode fn=FocusNode();
