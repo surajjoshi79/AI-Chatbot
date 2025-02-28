@@ -13,6 +13,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final clean="give me a clean response without using unnecessary symbol";
   static const apiKey="AIzaSyBul_e6uMK4IVUNVicNJuJPqOksawwvNdU";
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
@@ -28,7 +29,14 @@ class _ChatPageState extends State<ChatPage> {
       );
     }
   }
+  String cleanResponse(String response) {
+    String cleanedResponse = response.replaceAll('**', '');
+    cleanedResponse=cleanedResponse.replaceAll('*', '•');
+    cleanedResponse=cleanedResponse.replaceAll('`', '');
+    return cleanedResponse;
+  }
   Future<void> getReply() async{
+
     final message = txt.text;
     txt.clear();
 
@@ -37,13 +45,13 @@ class _ChatPageState extends State<ChatPage> {
       Provider.of<MsgProvider>(context,listen:false).addMessage(message);
     });
 
-    final prompt = [Content.text(message)];
+    final prompt = [Content.text(message+clean)];
     final response = await model.generateContent(prompt);
 
     setState(() {
       try {
-        curChat.add(response.text ?? '');
-        Provider.of<MsgProvider>(context, listen: false).addMessage(response.text ?? '');
+        curChat.add(cleanResponse(response.text ?? ''));
+        Provider.of<MsgProvider>(context, listen: false).addMessage(cleanResponse(response.text ?? ''));
       }catch(e){
         curChat.add('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
         Provider.of<MsgProvider>(context, listen: false).addMessage('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
