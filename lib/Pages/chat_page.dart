@@ -1,9 +1,11 @@
 import 'package:ai_chat_bot/Providers/msg_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_bubbles/chat_bubbles.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -14,6 +16,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   final clean="give me a clean response without using unnecessary symbol";
+  bool isLoading=false;
   static const apiKey="AIzaSyBul_e6uMK4IVUNVicNJuJPqOksawwvNdU";
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
@@ -43,6 +46,7 @@ class _ChatPageState extends State<ChatPage> {
     setState(() {
       curChat.add(message);
       Provider.of<MsgProvider>(context,listen:false).addMessage(message);
+      isLoading=true;
     });
 
     final prompt = [Content.text(message+clean)];
@@ -56,6 +60,7 @@ class _ChatPageState extends State<ChatPage> {
         curChat.add('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
         Provider.of<MsgProvider>(context, listen: false).addMessage('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
       }
+      isLoading=false;
     });
   }
   @override
@@ -158,26 +163,38 @@ class _ChatPageState extends State<ChatPage> {
                     }
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: GestureDetector(
-                        onLongPress: () async{
-                          Clipboard.setData(ClipboardData(text: curChat[index]));
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Text Copied'),
+                      child: Column(
+                        children: [
+                          GestureDetector(
+                            onLongPress: () async{
+                              Clipboard.setData(ClipboardData(text: curChat[index]));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Text Copied'),
+                                ),
+                              );
+                          },
+                            child: BubbleSpecialOne(
+                              text:curChat[index],
+                              seen: true,
+                              sent: true,
+                              textStyle: TextStyle(
+                                fontSize: 18,
+                              ),
+                              isSender: index%2==0?true:false,
+                              tail: true,
+                              color: index%2==0?Colors.blue:Colors.grey,
                             ),
-                          );
-                      },
-                        child: BubbleSpecialOne(
-                          text:curChat[index],
-                          seen: true,
-                          sent: true,
-                          textStyle: TextStyle(
-                            fontSize: 18,
                           ),
-                          isSender: index%2==0?true:false,
-                          tail: true,
-                          color: index%2==0?Colors.blue:Colors.grey,
-                        ),
+                          if(isLoading && index==curChat.length-1)
+                            Container(
+                              padding: EdgeInsets.only(top: 15),
+                              child: SpinKitThreeBounce(
+                                color: Colors.lightBlue,
+                                size: 35,
+                              ),
+                            )
+                        ],
                       ),
                     );
                   }
