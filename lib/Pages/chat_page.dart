@@ -189,9 +189,15 @@ class _ChatPageState extends State<ChatPage> {
                           if(isLoading && index==curChat.length-1)
                             Container(
                               padding: EdgeInsets.only(top: 15),
-                              child: SpinKitThreeBounce(
-                                color: Colors.lightBlue,
-                                size: 35,
+                              child: Row(
+                                children: [
+                                  Text("thinking",style: TextStyle(color: Colors.lightBlue)),
+                                  SizedBox(width: 5),
+                                  SpinKitThreeBounce(
+                                    color: Colors.lightBlue,
+                                    size: 15,
+                                  ),
+                                ],
                               ),
                             )
                         ],
