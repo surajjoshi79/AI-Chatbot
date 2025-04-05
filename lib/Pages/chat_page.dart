@@ -127,6 +127,9 @@ class _ChatPageState extends State<ChatPage> {
                     )
                 ),
               ),
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              textCapitalization: TextCapitalization.sentences,
             ),
           )
         ],
@@ -188,7 +191,7 @@ class _ChatPageState extends State<ChatPage> {
                           ),
                           if(isLoading && index==curChat.length-1)
                             Container(
-                              padding: EdgeInsets.only(top: 15),
+                              padding: EdgeInsets.all(8),
                               child: Row(
                                 children: [
                                   Text("thinking",style: TextStyle(color: Colors.lightBlue)),
@@ -245,6 +248,9 @@ class _ChatPageState extends State<ChatPage> {
                       )
                   ),
                 ),
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
+                textCapitalization: TextCapitalization.sentences,
               ),
             ),
           )
