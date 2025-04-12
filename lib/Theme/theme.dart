@@ -8,6 +8,11 @@ ThemeData lightMode=ThemeData(
   ),
   appBarTheme: AppBarTheme(
     color: Colors.grey.shade100
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: Colors.black,
+    selectionColor: Colors.grey,
+    selectionHandleColor: Colors.grey,
   )
 );
 
@@ -19,5 +24,10 @@ ThemeData darkMode=ThemeData(
     ),
     appBarTheme: AppBarTheme(
         color: Colors.grey.shade900
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      cursorColor: Colors.white,
+      selectionColor: Colors.grey,
+      selectionHandleColor: Colors.grey,
     )
 );

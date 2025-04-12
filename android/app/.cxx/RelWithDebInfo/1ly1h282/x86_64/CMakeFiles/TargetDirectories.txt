@@ -1,0 +1,2 @@
+D:/Project/ai_chat_bot/android/app/.cxx/RelWithDebInfo/1ly1h282/x86_64/CMakeFiles/edit_cache.dir
+D:/Project/ai_chat_bot/android/app/.cxx/RelWithDebInfo/1ly1h282/x86_64/CMakeFiles/rebuild_cache.dir
