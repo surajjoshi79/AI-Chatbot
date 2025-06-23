@@ -1,22 +1,18 @@
 import 'package:ai_chat_bot/Theme/theme.dart';
+import 'package:ai_chat_bot/utils.dart';
 import 'package:flutter/material.dart';
 
 class ThemeProvider with ChangeNotifier{
-  ThemeData _themeData=darkMode;
 
-  ThemeData get themeData=>_themeData;
-
-  set themeData(ThemeData themeData){
-    _themeData=themeData;
+  void toggleTheme(){
+    sharedPref.sharedPreferences.setBool("isLight?", !(sharedPref.sharedPreferences.getBool("isLight?")??true));
     notifyListeners();
   }
 
-  void toggleTheme(){
-    if(_themeData==lightMode){
-      _themeData=darkMode;
-    }else{
-      _themeData=lightMode;
+  ThemeData getTheme(){
+    if(sharedPref.sharedPreferences.getBool("isLight?")??true){
+      return darkMode;
     }
-    notifyListeners();
+    return lightMode;
   }
 }

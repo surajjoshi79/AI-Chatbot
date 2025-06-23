@@ -1,4 +1,5 @@
 import 'package:ai_chat_bot/Providers/theme_provider.dart';
+import 'package:ai_chat_bot/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'Pages/chat_ui.dart';
@@ -12,6 +13,7 @@ void main() async{
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await sharedPref.init();
   await Hive.initFlutter();
   await Hive.openBox('myBox');
   runApp(MultiProvider(providers: [
@@ -33,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "Chat Bot",
       debugShowCheckedModeBanner: false,
-      theme: Provider.of<ThemeProvider>(context).themeData,
+      theme: Provider.of<ThemeProvider>(context).getTheme(),
       home: ChatUi(),
     );
   }

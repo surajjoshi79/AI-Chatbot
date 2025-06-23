@@ -17,7 +17,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final clean="give me a clean response without using unnecessary symbol";
   bool isLoading=false;
-  static const apiKey="AIzaSyBul_e6uMK4IVUNVicNJuJPqOksawwvNdU";
+  static const apiKey="AIzaSyCzln6K_3X2SQkzs7NpL3nK485LaFnMRjk";
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   ScrollController scr=ScrollController();
@@ -102,7 +102,7 @@ class _ChatPageState extends State<ChatPage> {
                 color: Theme.of(context).colorScheme.secondary,
               ),
               decoration: InputDecoration(
-                hintText: "Enter Message",
+                hintText: "Enter Prompt",
                 hintStyle: TextStyle(
                     fontSize: 14
                 ),
@@ -223,7 +223,7 @@ class _ChatPageState extends State<ChatPage> {
                   color: Theme.of(context).colorScheme.secondary,
                 ),
                 decoration: InputDecoration(
-                  hintText: "Enter Message",
+                  hintText: "Enter Prompt",
                   hintStyle: TextStyle(
                     fontSize: 14
                   ),

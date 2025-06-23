@@ -1,7 +1,10 @@
 import 'package:ai_chat_bot/Pages/chat_page.dart';
 import 'package:ai_chat_bot/Pages/help_page.dart';
+import 'package:ai_chat_bot/Pages/image_generator_page.dart';
+import 'package:ai_chat_bot/Pages/voice_assistant_page.dart';
 import 'package:ai_chat_bot/Providers/msg_provider.dart';
 import 'package:ai_chat_bot/Providers/theme_provider.dart';
+import 'package:ai_chat_bot/Theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,7 +20,6 @@ class ChatUi extends StatefulWidget {
 }
 
 class _ChatUiState extends State<ChatUi> {
-  int count=0;
   ScrollController scr=ScrollController();
   final _myBox=Hive.box('myBox');
   void writeData(List<String> values){
@@ -66,26 +68,14 @@ class _ChatUiState extends State<ChatUi> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            GestureDetector(
-                onTap:(){
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context){
-                        return ChatPage();
-                      }
-                  ));
-                },
-                child: Image.asset("assets/chat_ui_final.png")),
-            SizedBox(
-              height: 20,
-            ),
             Container(
               color: Theme.of(context).colorScheme.primary,
               child: GestureDetector(
                 onTap: (){
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context){
-                      return ChatPage();
-                    }
+                      builder: (context){
+                        return ChatPage();
+                      }
                   ));
                 },
                 child: ListTile(
@@ -102,6 +92,80 @@ class _ChatUiState extends State<ChatUi> {
                   ),
                   ),
                   trailing: Icon(Icons.chat),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 1,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context){
+                        return VoiceAssistantPage();
+                      }
+                  ));
+                },
+                child: ListTile(
+                  leading: CircleAvatar(
+                    child: Image.asset("assets/microphone.png"),
+                  ),
+                  title: Text("Voice Assistant",style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                  ),
+                  subtitle: Text("Can I help you?",style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  ),
+                  trailing: Icon(Icons.assistant),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Divider(
+              thickness: 1,
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Container(
+              color: Theme.of(context).colorScheme.primary,
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context){
+                        return ImageGeneratorPage();
+                      }
+                  ));
+                },
+                child: ListTile(
+                  leading: CircleAvatar(
+                    child: Image.asset("assets/generative_image.png"),
+                  ),
+                  title: Text("Image Generator",style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                  ),
+                  subtitle: Text("Can I help you?",style: TextStyle(
+                    fontSize: 16,
+                  ),
+                  ),
+                  trailing: Icon(Icons.image),
                 ),
               ),
             ),
@@ -185,12 +249,11 @@ class _ChatUiState extends State<ChatUi> {
               alignment: Alignment.bottomRight,
               child: FloatingActionButton(onPressed: (){
                 setState(() {
-                  count++;
+                  Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
                 });
-                Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
               },
                 backgroundColor: Theme.of(context).colorScheme.secondary,
-                child:count%2!=0?Icon(Icons.dark_mode):Icon(Icons.light_mode)
+                child:Provider.of<ThemeProvider>(context).getTheme()==lightMode?Icon(Icons.dark_mode):Icon(Icons.light_mode)
               )
             )
           ],
