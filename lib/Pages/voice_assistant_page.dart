@@ -109,6 +109,7 @@ class _VoiceAssistantPageState extends State<VoiceAssistantPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: SingleChildScrollView(
                   child: Container(
+                    width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Theme.of(context).colorScheme.secondary,

@@ -20,7 +20,7 @@ class _ImageGeneratorPageState extends State<ImageGeneratorPage> {
     });
     final encodedPrompt = Uri.encodeComponent(prompt);
     setState(() {
-      imageUrl='https://image.pollinations.ai/prompt/$encodedPrompt?width=512&height=912&seed=12345&nologo=true';
+      imageUrl='https://image.pollinations.ai/prompt/$encodedPrompt?&enhance=true&seed=12345&nologo=true';
     });
   }
   Future<void> saveImageToGallery(String imageUrl) async {
