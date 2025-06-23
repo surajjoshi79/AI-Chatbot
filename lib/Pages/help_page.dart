@@ -78,14 +78,6 @@ class HelpPage extends StatelessWidget {
                 fontSize: 20,
                 color: Theme.of(context).colorScheme.secondary,
               ),),
-              Divider(
-                thickness: 1.5,
-              ),
-              Text("For more information about the app and its capability you can check out INFO CENTER. You can visit it by clicking info button at homepage appbar.",style: TextStyle(
-                fontSize: 24,
-                color: Theme.of(context).colorScheme.secondary,
-                fontWeight: FontWeight.bold,
-              ),)
             ],
           ),
         ),

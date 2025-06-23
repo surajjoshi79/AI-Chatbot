@@ -66,7 +66,11 @@ class _ImageGeneratorPageState extends State<ImageGeneratorPage> {
                       setState(() {
                         fn.unfocus();
                       });
-                      generateImageUrl();
+                      if(txt.text.trim().isNotEmpty) {
+                        generateImageUrl();
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please enter a prompt")));
+                      }
                     }
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -90,7 +94,7 @@ class _ImageGeneratorPageState extends State<ImageGeneratorPage> {
               height: 20,
             ),
             Container(
-              height: MediaQuery.of(context).size.height/1.3,
+              height: MediaQuery.of(context).size.height/1.5,
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -108,17 +112,38 @@ class _ImageGeneratorPageState extends State<ImageGeneratorPage> {
                   )
               ):
               Center(
-                  child: GestureDetector(
-                      onLongPress:(){
-                        saveImageToGallery(imageUrl!);
-                        },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Image.network(imageUrl!),
-                      ))
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.network(imageUrl!),
+                  )
               ),
               ),
           ],
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 90),
+        child: TextButton(
+            onPressed: (){
+              if(imageUrl!=null) {
+                saveImageToGallery(imageUrl!);
+              }else{
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to save image")));
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFFffe599),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Save to gallery',style: TextStyle(fontSize:25,color:Theme.of(context).colorScheme.primary)),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(Icons.save,color:Theme.of(context).colorScheme.primary,size: 25),
+              ],
+            )
         ),
       ),
     );

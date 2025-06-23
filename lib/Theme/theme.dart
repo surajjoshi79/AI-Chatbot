@@ -5,6 +5,7 @@ ThemeData lightMode=ThemeData(
   colorScheme: ColorScheme.light(
     primary: Colors.white,
     secondary: Colors.black,
+    tertiary: Color(0xFFbf9000)
   ),
   appBarTheme: AppBarTheme(
     color: Colors.grey.shade100
@@ -21,6 +22,7 @@ ThemeData darkMode=ThemeData(
     colorScheme: ColorScheme.dark(
       primary: Colors.black,
       secondary: Colors.white,
+      tertiary:Color(0xFFffe599),
     ),
     appBarTheme: AppBarTheme(
         color: Colors.grey.shade900

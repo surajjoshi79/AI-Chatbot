@@ -153,7 +153,7 @@ class _VoiceAssistantPageState extends State<VoiceAssistantPage> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.secondary,
+              backgroundColor: Color(0xFFffe599),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

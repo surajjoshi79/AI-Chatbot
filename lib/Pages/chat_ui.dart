@@ -252,7 +252,7 @@ class _ChatUiState extends State<ChatUi> {
                   Provider.of<ThemeProvider>(context,listen: false).toggleTheme();
                 });
               },
-                backgroundColor: Theme.of(context).colorScheme.secondary,
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
                 child:Provider.of<ThemeProvider>(context).getTheme()==lightMode?Icon(Icons.dark_mode):Icon(Icons.light_mode)
               )
             )
