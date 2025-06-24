@@ -4,6 +4,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_tts/flutter_tts.dart';
+import '../my_api_key.dart';
 
 class VoiceAssistantPage extends StatefulWidget {
   const VoiceAssistantPage({super.key});
@@ -13,7 +14,6 @@ class VoiceAssistantPage extends StatefulWidget {
 }
 
 class _VoiceAssistantPageState extends State<VoiceAssistantPage> {
-  static const apiKey="AIzaSyCzln6K_3X2SQkzs7NpL3nK485LaFnMRjk";
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   final SpeechToText speechToText = SpeechToText();
   final FlutterTts textToSpeech=FlutterTts();

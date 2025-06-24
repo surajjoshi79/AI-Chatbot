@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../my_api_key.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -17,7 +18,6 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   final clean="give me a clean response without using unnecessary symbol";
   bool isLoading=false;
-  static const apiKey="AIzaSyCzln6K_3X2SQkzs7NpL3nK485LaFnMRjk";
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   ScrollController scr=ScrollController();
