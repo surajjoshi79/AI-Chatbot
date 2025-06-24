@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../my_api_key.dart';
+import '../utils.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -20,6 +22,7 @@ class _ChatPageState extends State<ChatPage> {
   bool isLoading=false;
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
+  Uint8List? image;
   ScrollController scr=ScrollController();
   TextEditingController txt=TextEditingController();
   FocusNode fn=FocusNode();
@@ -38,6 +41,38 @@ class _ChatPageState extends State<ChatPage> {
     cleanedResponse=cleanedResponse.replaceAll('`', '');
     return cleanedResponse;
   }
+  Future<void> getImage() async{
+    image=await pickImage(ImageSource.gallery);
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image Selected")));
+    setState(() {});
+  }
+  Future<void> getReplyImage() async{
+
+    final message = txt.text;
+    txt.clear();
+
+    setState(() {
+      curChat.add(message);
+      Provider.of<MsgProvider>(context,listen:false).addMessage(message);
+      isLoading=true;
+    });
+    final promptImage = TextPart(message+clean);
+    final imageParts = [DataPart('image/jpeg', image!)];
+    image==null;
+
+    final responseImage = await model.generateContent([Content.multi([promptImage, ...imageParts])]);
+
+    setState(() {
+      try {
+        curChat.add(cleanResponse(responseImage.text ?? ''));
+        Provider.of<MsgProvider>(context, listen: false).addMessage(cleanResponse(responseImage.text ?? ''));
+      }catch(e){
+        curChat.add('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
+        Provider.of<MsgProvider>(context, listen: false).addMessage('I am really sorry for your inconvenience but I am unable to find an appropriate response for your query.');
+      }
+      isLoading=false;
+    });
+  }
   Future<void> getReply() async{
 
     final message = txt.text;
@@ -51,7 +86,6 @@ class _ChatPageState extends State<ChatPage> {
 
     final prompt = [Content.text(message+clean)];
     final response = await model.generateContent(prompt);
-
     setState(() {
       try {
         curChat.add(cleanResponse(response.text ?? ''));
@@ -106,10 +140,16 @@ class _ChatPageState extends State<ChatPage> {
                 hintStyle: TextStyle(
                     fontSize: 14
                 ),
+                prefixIcon: IconButton(icon: Icon(Icons.camera_alt),
+                    onPressed: (){
+                        setState(() {
+                          getImage();
+                        });
+                    }),
                 suffixIcon: IconButton(icon: Icon(Icons.send),
                     onPressed: () {
                       fn.unfocus();
-                      getReply();
+                      image==null?getReply():getReplyImage();
                     }
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -227,10 +267,16 @@ class _ChatPageState extends State<ChatPage> {
                   hintStyle: TextStyle(
                     fontSize: 14
                   ),
+                  prefixIcon: IconButton(icon: Icon(Icons.camera_alt),
+                      onPressed: (){
+                        setState(() {
+                          getImage();
+                        });
+                      }),
                   suffixIcon: IconButton(icon: Icon(Icons.send),
                       onPressed: () {
                           fn.unfocus();
-                          getReply();
+                          image==null?getReply():getReplyImage();
                       }
                   ),
                   enabledBorder: OutlineInputBorder(
