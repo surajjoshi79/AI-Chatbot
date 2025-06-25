@@ -23,6 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   List<String> curChat=[];
   final model = GenerativeModel(model: 'gemini-2.0-flash', apiKey: apiKey);
   Uint8List? image;
+  bool isImageSelected=false;
   ScrollController scr=ScrollController();
   TextEditingController txt=TextEditingController();
   FocusNode fn=FocusNode();
@@ -43,6 +44,7 @@ class _ChatPageState extends State<ChatPage> {
   }
   Future<void> getImage() async{
     image=await pickImage(ImageSource.gallery);
+    isImageSelected=true;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image Selected")));
     setState(() {});
   }
@@ -52,13 +54,13 @@ class _ChatPageState extends State<ChatPage> {
     txt.clear();
 
     setState(() {
+      isImageSelected=false;
       curChat.add(message);
       Provider.of<MsgProvider>(context,listen:false).addMessage(message);
       isLoading=true;
     });
     final promptImage = TextPart(message+clean);
     final imageParts = [DataPart('image/jpeg', image!)];
-    image==null;
 
     final responseImage = await model.generateContent([Content.multi([promptImage, ...imageParts])]);
 
@@ -124,7 +126,28 @@ class _ChatPageState extends State<ChatPage> {
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text("Ask me anything",style: TextStyle(fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary,fontSize: 20),) ,
+          !isImageSelected?
+          Text("Ask me anything",style: TextStyle(fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.secondary,fontSize: 20
+          )):
+          Padding(
+            padding: const EdgeInsets.only(left:8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                      width: 2
+                  ),
+                ),
+                child: Image.memory(image!),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
@@ -149,7 +172,7 @@ class _ChatPageState extends State<ChatPage> {
                 suffixIcon: IconButton(icon: Icon(Icons.send),
                     onPressed: () {
                       fn.unfocus();
-                      image==null?getReply():getReplyImage();
+                      !isImageSelected?getReply():getReplyImage();
                     }
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -250,6 +273,25 @@ class _ChatPageState extends State<ChatPage> {
               ),
             ),
           ),
+          !isImageSelected?Container():
+          Padding(
+            padding: const EdgeInsets.only(left:8.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                      color: Theme.of(context).colorScheme.secondary,
+                      width: 2
+                  ),
+                ),
+                child: Image.memory(image!),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Align(
@@ -276,7 +318,7 @@ class _ChatPageState extends State<ChatPage> {
                   suffixIcon: IconButton(icon: Icon(Icons.send),
                       onPressed: () {
                           fn.unfocus();
-                          image==null?getReply():getReplyImage();
+                          !isImageSelected?getReply():getReplyImage();
                       }
                   ),
                   enabledBorder: OutlineInputBorder(
