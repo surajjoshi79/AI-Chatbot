@@ -171,8 +171,11 @@ class _ChatPageState extends State<ChatPage> {
                     }),
                 suffixIcon: IconButton(icon: Icon(Icons.send),
                     onPressed: () {
-                      fn.unfocus();
-                      !isImageSelected?getReply():getReplyImage();
+                      if(txt.text.trim().isNotEmpty) {
+                        !isImageSelected ? getReply() : getReplyImage();
+                      }else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter a prompt")));
+                      }
                     }
                 ),
                 enabledBorder: OutlineInputBorder(
@@ -318,7 +321,11 @@ class _ChatPageState extends State<ChatPage> {
                   suffixIcon: IconButton(icon: Icon(Icons.send),
                       onPressed: () {
                           fn.unfocus();
-                          !isImageSelected?getReply():getReplyImage();
+                          if(txt.text.trim().isNotEmpty) {
+                            !isImageSelected ? getReply() : getReplyImage();
+                          }else{
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Enter a prompt")));
+                          }
                       }
                   ),
                   enabledBorder: OutlineInputBorder(
