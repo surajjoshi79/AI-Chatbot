@@ -44,6 +44,10 @@ class _ChatPageState extends State<ChatPage> {
   }
   Future<void> getImage() async{
     image=await pickImage(ImageSource.gallery);
+    if(image==null){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to select image")));
+      return;
+    }
     isImageSelected=true;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Image Selected")));
     setState(() {});
@@ -144,7 +148,10 @@ class _ChatPageState extends State<ChatPage> {
                       width: 2
                   ),
                 ),
-                child: Image.memory(image!),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.memory(image!,fit: BoxFit.fill)
+                ),
               ),
             ),
           ),
@@ -291,7 +298,10 @@ class _ChatPageState extends State<ChatPage> {
                       width: 2
                   ),
                 ),
-                child: Image.memory(image!),
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.memory(image!,fit: BoxFit.fill)
+                ),
               ),
             ),
           ),

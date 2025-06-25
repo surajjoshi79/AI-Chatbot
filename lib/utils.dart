@@ -7,6 +7,9 @@ pickImage(ImageSource source) async{
   if(file!=null){
     return file.readAsBytes();
   }
+  else{
+    return null;
+  }
 }
 
 class SharedPref{

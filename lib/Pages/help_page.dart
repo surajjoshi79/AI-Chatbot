@@ -53,14 +53,14 @@ class HelpPage extends StatelessWidget {
               Divider(
                 thickness: 1.5,
               ),
-              Text("4.What to do if chatbot takes a long interval to answer?\nSometimes it can be network issue, so you should check your network connection. If network are fine you need to restart the app because it can be any internal issue.\n",style: TextStyle(
+              Text("4.What to do if chatbot takes a long interval to answer?\nIf the chatbot is experiencing a delayed response, it may be due to a network connectivity issue. Please ensure your device has a stable internet connection. If your network is functioning correctly, restarting the application may resolve any underlying internal issues causing the delay.\n",style: TextStyle(
                 fontSize: 20,
                 color: Theme.of(context).colorScheme.secondary,
               ),),
               Divider(
                 thickness: 1.5,
               ),
-              Text("5.What to do if it shows random errors?\nIf something like this happen it can be due to any unwanted bug or memory issue. You can clear cache or sometime you may need to clear app data for app to work perfectly without any unwanted issues.\n",style: TextStyle(
+              Text("5.What to do if it shows random errors?\nShould you encounter random errors, these could be attributed to an unforeseen software bug or a memory-related problem. To address this, we recommend clearing the application's cache. If the issue persists, clearing the app data may be necessary to restore optimal functionality and eliminate persistent errors.\n",style: TextStyle(
                 fontSize: 20,
                 color: Theme.of(context).colorScheme.secondary,
               ),),

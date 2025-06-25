@@ -114,7 +114,10 @@ class _ImageGeneratorPageState extends State<ImageGeneratorPage> {
               Center(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Image.network(imageUrl!),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(imageUrl!,fit: BoxFit.fill)
+                    ),
                   )
               ),
               ),
